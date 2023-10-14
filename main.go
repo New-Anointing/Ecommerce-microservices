@@ -4,12 +4,14 @@ import (
 	"log"
 	"os"
 
+	"ecommerce-microservices/db"
+
 	"github.com/gofiber/fiber"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	db.setupDB()
+	db.SetupDB()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading the env file ")
@@ -17,4 +19,5 @@ func main() {
 	port := os.Getenv("DB_PORT")
 	app := fiber.New()
 	app.Listen(":" + port)
+
 }
