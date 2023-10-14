@@ -58,3 +58,4 @@ Follow these steps to set up and run the microservice locally.
 ## Contributors
 -   [Israel](https://github.com/ezrahel)
 -   [New Anointing](https://github.com/New-Anointing)
+-   [Adedamola](https://github.com/ijiwole)
