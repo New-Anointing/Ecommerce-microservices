@@ -13,7 +13,7 @@ import (
 
 var DB *gorm.DB
 
-func setupDB() {
+func SetupDB() {
 	var (
 		dbUsername = os.Getenv("DB_USERNAME")
 		dbPassword = os.Getenv("DB_PASSWORD")
