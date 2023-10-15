@@ -2,13 +2,17 @@ package product
 
 import (
 	"net/http"
-	//"strconv"
+
 	"github.com/gofiber/fiber"
 	"gorm.io/gorm"
 )
 
 type accessData struct {
 	DB *gorm.DB
+}
+
+func New(db *gorm.DB) *accessData {
+	return &accessData{DB: db}
 }
 
 // var newProduct []Products
@@ -33,12 +37,6 @@ func (r *accessData) createProduct(context *fiber.Ctx) error {
 		"Message": "Product successfully created",
 	})
 	return nil
-	// w.Header().Set("Content-Type", "application/json")
-	// var prod Products
-	// _ = json.NewDecoder(r.Body).Decode(&prod)
-	// prod.Id = strconv.Itoa(rand.Intn(100000000))
-	// newProduct = append(newProduct, prod)
-	// json.NewEncoder(w).Encode(prod)
 
 }
 
@@ -84,6 +82,31 @@ func (r *accessData) DeleteProductbyID(context *fiber.Ctx) {
 	}
 	context.Status(http.StatusOK).JSON(&fiber.Map{
 		"Message": "Product deleted successfully",
+	})
+
+}
+
+func (r *accessData) UpdateProductByID(context *fiber.Ctx) {
+	id := context.Params("Id")
+	var updateProduct Products
+	err := r.DB.First(&updateProduct, id).Error
+	if err != nil {
+		context.Status(http.StatusNotFound).JSON(&fiber.Map{
+			"Message": "Could not find product",
+		})
+	}
+	if err := context.BodyParser(&updateProduct); err != nil {
+		context.Status(http.StatusBadRequest).JSON(&fiber.Map{
+			"Message": "Could not update",
+		})
+	}
+	if err := r.DB.Save(&updateProduct).Error; err != nil {
+		context.Status(http.StatusInternalServerError).JSON(&fiber.Map{
+			"Message": "Could not save to db",
+		})
+	}
+	context.Status(http.StatusOK).JSON(&fiber.Map{
+		"Message": "Successfully saved",
 	})
 
 }
