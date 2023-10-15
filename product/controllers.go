@@ -33,12 +33,6 @@ func (r *accessData) createProduct(context *fiber.Ctx) error {
 		"Message": "Product successfully created",
 	})
 	return nil
-	// w.Header().Set("Content-Type", "application/json")
-	// var prod Products
-	// _ = json.NewDecoder(r.Body).Decode(&prod)
-	// prod.Id = strconv.Itoa(rand.Intn(100000000))
-	// newProduct = append(newProduct, prod)
-	// json.NewEncoder(w).Encode(prod)
 
 }
 
